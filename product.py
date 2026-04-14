@@ -1,13 +1,14 @@
 from exception import InsufficientStockException
 
 class Product:
-    counter = 1
-    def __init__(self, name: str, quantity: int, price: float):
-        self.product_id = Product.counter
+    _id_counter = 1
+    def __init__(self, name: str, quantity: int, price: float, category: str):
+        self.product_id = Product._id_counter
         self.name = name
         self.quantity = quantity
         self.price = price
-        Product.counter += 1
+        self.category = category
+        Product._id_counter += 1
 
     def increase_stock(self, amount: int):
         """Add stock to product"""
@@ -30,7 +31,7 @@ Product : {self.name}
 Quantity: {self.quantity}
 Price: {self.price}"""
 
-# p = Product('Shoes', 4, 3500)
+# p = Product('Shoes', 4, 3500, 'footwear')
 # print(p)
 # try:
 #     print(p.is_available(5))
