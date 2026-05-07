@@ -1,0 +1,12 @@
+2026-04-21 16:20:16,118 - INFO - manager - InventoryManager initialized
+2026-04-21 16:21:09,972 - INFO - inventory - Inventory created | ID: 1, Name: zepto, Location: bopal
+2026-04-21 16:21:09,973 - INFO - manager - Inventory added | Name: zepto, Location: bopal
+2026-04-21 16:21:33,111 - DEBUG - manager - Inventory fetched | Name: zepto, Location: bopal
+2026-04-21 16:21:50,850 - INFO - product - Product created | ID: 1, Name: laptop, Qty: 23, Price: 23000.0, Category: Electrical
+2026-04-21 16:21:50,851 - INFO - product - Electrical product initialized | ID: 1, Warranty: 6 months
+2026-04-21 16:21:50,851 - INFO - inventory - Product added | Inventory: zepto, Product_Category: Electrical, Product: laptop, Qty: 23
+2026-04-22 15:08:47,084 - INFO - inventory - Inventory created | ID: 1, Name: w1, Location: ind
+2026-04-22 15:08:47,086 - INFO - inventory - Inventory created | ID: 2, Name: w2, Location: ind2
+2026-04-23 13:25:23,358 - INFO - inventory - Inventory created | ID: 1, Name: w1, Location: ind
+2026-04-23 13:25:23,358 - INFO - inventory - Inventory created | ID: 2, Name: w2, Location: ind2
+2026-04-23 13:25:49,332 - INFO - manager - InventoryManager initialized

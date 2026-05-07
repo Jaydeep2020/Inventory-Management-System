@@ -1,0 +1,99 @@
+2026-05-07 11:21:18,376 - INFO - services.manager - InventoryManager initialized
+2026-05-07 12:40:43,573 - INFO - services.manager - InventoryManager initialized
+2026-05-07 12:40:59,474 - INFO - services.inventory - Inventory created | ID: None, Name: Zepto, Location: Bhopal
+2026-05-07 12:40:59,850 - INFO - services.manager - Inventory added | Name: Zepto, Location: Bhopal
+2026-05-07 12:41:22,216 - INFO - services.inventory - Inventory created | ID: None, Name: Zepto, Location: Bhopal
+2026-05-07 13:02:10,829 - INFO - services.manager - InventoryManager initialized
+2026-05-07 13:04:36,098 - INFO - services.manager - InventoryManager initialized
+2026-05-07 13:04:49,886 - INFO - services.inventory - Inventory created | ID: None, Name: Zepto, Location: Bhopal
+2026-05-07 13:04:49,897 - INFO - services.manager - Inventory added | Name: Zepto, Location: Bhopal
+2026-05-07 13:22:43,123 - ERROR - services.manager - Remove failed | Inventory not found | Name: Zepto, Location: Bhopal
+2026-05-07 13:22:46,404 - ERROR - services.manager - Remove failed | Inventory not found | Name: Zepto, Location: Bhopal
+2026-05-07 15:44:19,252 - INFO - services.manager - InventoryManager initialized
+2026-05-07 15:44:28,259 - INFO - services.inventory - Inventory created | ID: None, Name: Zepto, Location: Bopal
+2026-05-07 15:44:28,421 - INFO - services.manager - Inventory added | Name: Zepto, Location: Bopal
+2026-05-07 15:44:33,798 - ERROR - services.manager - Failed to fetch inventories | Error: column "inventory_id" does not exist
+LINE 2:             SELECT inventory_id, name, location
+                           ^
+
+2026-05-07 15:45:03,274 - INFO - services.manager - InventoryManager initialized
+2026-05-07 15:45:06,074 - INFO - services.manager - Inventories fetched successfully
+2026-05-07 15:46:52,344 - INFO - services.manager - InventoryManager initialized
+2026-05-07 15:46:54,739 - INFO - services.manager - Inventories fetched successfully
+2026-05-07 15:47:40,605 - INFO - services.manager - InventoryManager initialized
+2026-05-07 15:47:43,705 - INFO - services.manager - Inventories fetched successfully
+2026-05-07 15:48:00,665 - INFO - services.inventory - Inventory created | ID: None, Name: Zepto, Location: Iscon
+2026-05-07 15:48:00,667 - INFO - services.manager - Inventory added | Name: Zepto, Location: Iscon
+2026-05-07 15:48:03,082 - INFO - services.manager - Inventories fetched successfully
+2026-05-07 15:59:44,291 - INFO - services.manager - InventoryManager initialized
+2026-05-07 16:39:44,249 - INFO - services.manager - InventoryManager initialized
+2026-05-07 16:39:47,182 - INFO - services.manager - Inventories fetched successfully
+2026-05-07 16:40:54,472 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 16:40:54,474 - INFO - services.product - Product created | ID: 1, Name: Laptop, Qty: 5, Price: 50000.0, Category: Electrical
+2026-05-07 16:40:54,474 - INFO - services.product - Electrical product initialized | ID: 1, Warranty: 12 months
+2026-05-07 16:42:34,886 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 16:42:34,886 - INFO - services.product - Product created | ID: 1, Name: Laptop, Qty: 5, Price: 50000.0, Category: Electrical
+2026-05-07 16:42:34,886 - INFO - services.product - Electrical product initialized | ID: 1, Warranty: 12 months
+2026-05-07 16:42:38,104 - INFO - services.manager - InventoryManager initialized
+2026-05-07 16:43:33,506 - INFO - services.manager - InventoryManager initialized
+2026-05-07 16:44:10,810 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 16:44:10,814 - INFO - services.product - Product created | ID: 1, Name: Laptop, Qty: 5, Price: 50000.0, Category: Electrical
+2026-05-07 16:44:10,815 - INFO - services.product - Electrical product initialized | ID: 1, Warranty: 11 months
+2026-05-07 16:44:10,857 - ERROR - services.inventory - Failed to add product | Error: 'ElectricalProduct' object has no attribute 'warranty'
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 91, in add_product
+    values3 = (product.name, product.category, product.price, product.warranty)
+                                                              ^^^^^^^^^^^^^^^^
+AttributeError: 'ElectricalProduct' object has no attribute 'warranty'
+2026-05-07 16:45:41,612 - INFO - services.manager - InventoryManager initialized
+2026-05-07 16:46:04,747 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 16:46:04,753 - INFO - services.product - Product created | ID: 1, Name: , Qty: 10, Price: 50000.0, Category: Electrical
+2026-05-07 16:46:04,753 - INFO - services.product - Electrical product initialized | ID: 1, Warranty: 12 months
+2026-05-07 16:46:04,762 - ERROR - services.inventory - Failed to add product | Error: 'ElectricalProduct' object has no attribute 'warranty'
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 91, in add_product
+    values3 = (product.name, product.category, product.price, product.warranty)
+                                                              ^^^^^^^^^^^^^^^^
+AttributeError: 'ElectricalProduct' object has no attribute 'warranty'
+2026-05-07 16:50:58,682 - INFO - services.manager - InventoryManager initialized
+2026-05-07 16:51:19,580 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-07 16:51:40,160 - INFO - services.manager - InventoryManager initialized
+2026-05-07 16:51:43,045 - INFO - services.manager - Inventories fetched successfully
+2026-05-07 17:05:52,202 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-07 17:05:55,658 - INFO - services.manager - InventoryManager initialized
+2026-05-07 17:06:40,128 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-07 17:09:56,750 - DEBUG - __main__ - Inventory fetched | Name: Zepto, Location: Bopal
+2026-05-07 17:12:19,370 - INFO - services.manager - InventoryManager initialized
+2026-05-07 17:12:55,416 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 17:12:55,417 - INFO - services.product - Product created | ID: 1, Name: Laptop, Qty: 10, Price: 50000.0, Category: Electrical
+2026-05-07 17:12:55,417 - INFO - services.product - Electrical product initialized | ID: 1, Warranty: 11 months
+2026-05-07 17:12:55,445 - ERROR - services.inventory - Failed to add product | Error: column "warranty" of relation "product" does not exist
+LINE 2: ...       insert into product (name, category, price, warranty)
+                                                              ^
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 93, in add_product
+    cursor.execute(insert_product_query, values3)
+psycopg2.errors.UndefinedColumn: column "warranty" of relation "product" does not exist
+LINE 2: ...       insert into product (name, category, price, warranty)
+                                                              ^
+
+2026-05-07 17:14:22,248 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 17:14:22,249 - INFO - services.product - Product created | ID: 1, Name: Laptop, Qty: 10, Price: 50000.0, Category: Electrical
+2026-05-07 17:14:22,249 - INFO - services.product - Electrical product initialized | ID: 1, Warranty: 11 months
+2026-05-07 17:14:22,290 - INFO - services.inventory - Product added successfully | Product: Laptop
+2026-05-07 17:14:33,177 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 17:26:51,702 - INFO - services.manager - InventoryManager initialized
+2026-05-07 17:27:34,060 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Bopal
+2026-05-07 17:27:34,075 - ERROR - services.inventory - Remove failed | Product not found | Product: Apple
+2026-05-07 17:27:34,076 - ERROR - services.inventory - Failed to remove product | Error: ProductNotFoundException.__init__() missing 1 required positional argument: 'inventory_name'
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 148, in remove_product
+    raise ProductNotFoundException(product_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: ProductNotFoundException.__init__() missing 1 required positional argument: 'inventory_name'
+2026-05-07 17:29:19,726 - INFO - services.manager - InventoryManager initialized
+2026-05-07 17:29:27,227 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-07 17:30:33,214 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Bopal
+2026-05-07 17:30:33,218 - ERROR - services.inventory - Remove failed | Product not found | Product: Apple
+2026-05-07 17:32:11,395 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 17:32:11,402 - INFO - services.inventory - Product removed successfully | Product: Laptop
