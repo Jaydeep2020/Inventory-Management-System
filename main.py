@@ -46,7 +46,7 @@ menu = st.sidebar.selectbox(
         "Remove Product",
         "Update Stock",
         "Check Availability",
-        "Fulfill Order",
+        # "Fulfill Order",
         "Transfer Stock",
         "Total Stock Report"
     ]
@@ -219,14 +219,25 @@ elif menu == "View Products":
                 st.warning("No products found")
 
             else:
-                for product in products:
 
-                    with st.container(border=True):
-                        st.write(product)
+                import pandas as pd
+
+                df = pd.DataFrame(
+                    products,
+                    columns=[
+                        "Product Name",
+                        "Category",
+                        "Price",
+                        "Expiry Date",
+                        "Warranty (Months)",
+                        "Quantity"
+                    ]
+                )
+
+                st.dataframe(df, width="stretch")
 
         except Exception as e:
             st.error(str(e))
-
 # =========================================================
 # 6. REMOVE PRODUCT
 # =========================================================
@@ -276,14 +287,15 @@ elif menu == "Update Stock":
     if st.button("Update Stock"):
 
         try:
-            inventory = get_inventory(
+            inventory_data = InventoryManager.get_inventory(
                 inv_name,
                 inv_location
             )
 
-            inventory.update_stock(
+            Inventory.update_stock(
                 product_name,
-                quantity
+                quantity,
+                inventory_data
             )
 
             st.success(
@@ -295,6 +307,8 @@ elif menu == "Update Stock":
             InsufficientStockException
         ) as e:
 
+            st.error(str(e))
+        except Exception as e:
             st.error(str(e))
 
 # =========================================================
@@ -318,14 +332,15 @@ elif menu == "Check Availability":
     if st.button("Check Availability"):
 
         try:
-            inventory = get_inventory(
+            inventory_data = InventoryManager.get_inventory(
                 inv_name,
                 inv_location
             )
 
-            inventory.check_availability(
+            Inventory.check_availability(
                 product_name,
-                qty
+                qty,
+                inventory_data[0]
             )
 
             st.success(
@@ -339,39 +354,39 @@ elif menu == "Check Availability":
 
             st.error(str(e))
 
-# =========================================================
-# 9. FULFILL ORDER
-# =========================================================
-elif menu == "Fulfill Order":
-
-    st.header("🛒 Fulfill Order")
-
-    product_name = st.text_input("Product Name")
-
-    qty = st.number_input(
-        "Quantity",
-        min_value=1,
-        step=1
-    )
-
-    if st.button("Fulfill Order"):
-
-        try:
-            manager.fulfill_order(
-                product_name,
-                qty
-            )
-
-            st.success(
-                "Order fulfilled successfully"
-            )
-
-        except (
-            ProductNotFoundException,
-            InsufficientStockException
-        ) as e:
-
-            st.error(str(e))
+# # =========================================================
+# # 9. FULFILL ORDER
+# # =========================================================
+# elif menu == "Fulfill Order":
+#
+#     st.header("🛒 Fulfill Order")
+#
+#     product_name = st.text_input("Product Name")
+#
+#     qty = st.number_input(
+#         "Quantity",
+#         min_value=1,
+#         step=1
+#     )
+#
+#     if st.button("Fulfill Order"):
+#
+#         try:
+#             manager.fulfill_order(
+#                 product_name,
+#                 qty
+#             )
+#
+#             st.success(
+#                 "Order fulfilled successfully"
+#             )
+#
+#         except (
+#             ProductNotFoundException,
+#             InsufficientStockException
+#         ) as e:
+#
+#             st.error(str(e))
 
 # =========================================================
 # 10. TRANSFER STOCK
@@ -411,13 +426,22 @@ elif menu == "Transfer Stock":
     if st.button("Transfer Stock"):
 
         try:
-            manager.transfer_stock(
-                product_name,
-                qty,
+
+            inventory_data = InventoryManager.get_inventory(
                 source_name,
-                source_location,
+                source_location
+            )
+
+            inventory_data2 = InventoryManager.get_inventory(
                 target_name,
                 target_location
+            )
+
+            InventoryManager.transfer_stock(
+                product_name,
+                qty,
+                inventory_data[0],
+                inventory_data2[0]
             )
 
             st.success(
@@ -443,7 +467,7 @@ elif menu == "Total Stock Report":
 
     if st.button("Get Total Stock"):
 
-        total = manager.get_total_stock(product_name)
+        total = InventoryManager.get_total_stock(product_name)
 
         st.info(
             f"Total stock for '{product_name}' = {total}"

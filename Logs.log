@@ -97,3 +97,162 @@ TypeError: ProductNotFoundException.__init__() missing 1 required positional arg
 2026-05-07 17:30:33,218 - ERROR - services.inventory - Remove failed | Product not found | Product: Apple
 2026-05-07 17:32:11,395 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
 2026-05-07 17:32:11,402 - INFO - services.inventory - Product removed successfully | Product: Laptop
+2026-05-07 20:53:23,847 - INFO - services.manager - InventoryManager initialized
+2026-05-07 20:53:37,063 - INFO - services.manager - Inventories fetched successfully
+2026-05-07 20:54:03,189 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 20:56:25,267 - INFO - services.manager - InventoryManager initialized
+2026-05-07 20:56:41,680 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: Iskon
+2026-05-07 20:57:23,647 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: Iskon
+2026-05-07 20:57:30,977 - INFO - services.manager - InventoryManager initialized
+2026-05-07 20:57:53,415 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 20:58:56,993 - INFO - services.manager - InventoryManager initialized
+2026-05-07 20:59:17,578 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Bopal
+2026-05-07 20:59:27,586 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 21:04:25,640 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 22:54:03,354 - INFO - services.manager - InventoryManager initialized
+2026-05-07 22:54:45,861 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 22:55:48,460 - INFO - services.manager - InventoryManager initialized
+2026-05-07 22:56:13,109 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 22:57:17,851 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 22:57:34,256 - INFO - services.manager - InventoryManager initialized
+2026-05-07 22:57:56,679 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 22:59:42,322 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:04:11,445 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:04:14,757 - INFO - services.manager - InventoryManager initialized
+2026-05-07 23:04:36,963 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:06:05,571 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:06:08,450 - INFO - services.manager - InventoryManager initialized
+2026-05-07 23:06:30,245 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:07:58,392 - INFO - services.manager - InventoryManager initialized
+2026-05-07 23:08:11,493 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-07 23:08:30,361 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:08:36,464 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:09:30,070 - INFO - services.manager - InventoryManager initialized
+2026-05-07 23:10:01,254 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:12:47,625 - INFO - services.manager - InventoryManager initialized
+2026-05-07 23:13:14,159 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:16:11,474 - INFO - services.manager - InventoryManager initialized
+2026-05-07 23:16:36,112 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-07 23:16:36,124 - ERROR - services.inventory - Failed to update stock | Error: new row for relation "inventory_stock" violates check constraint "inventory_stock_quantity_check"
+DETAIL:  Failing row contains (4, 5, 2, -9, 2026-05-07 18:56:48.244642, 2026-05-07 18:56:48.244642).
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 209, in update_stock
+    cursor.execute(update_stock_query, values)
+psycopg2.errors.CheckViolation: new row for relation "inventory_stock" violates check constraint "inventory_stock_quantity_check"
+DETAIL:  Failing row contains (4, 5, 2, -9, 2026-05-07 18:56:48.244642, 2026-05-07 18:56:48.244642).
+
+2026-05-08 00:25:02,324 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:25:19,336 - DEBUG - services.manager - Calculating total stock | Product: Laptop
+2026-05-08 00:25:24,212 - DEBUG - services.manager - Calculating total stock | Product: Laptop
+2026-05-08 00:30:04,959 - INFO - __main__ - InventoryManager initialized
+2026-05-08 00:31:02,003 - INFO - __main__ - InventoryManager initialized
+2026-05-08 00:31:16,705 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:31:16,763 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:31:30,360 - INFO - services.inventory - Inventory created | ID: None, Name: Zepto, Location: Gota
+2026-05-08 00:31:30,420 - INFO - services.manager - Inventory added | Name: Zepto, Location: Gota
+2026-05-08 00:32:10,385 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 00:32:10,386 - INFO - services.product - Product created | ID: 1, Name: Laptop, Qty: 10, Price: 30000.0, Category: Electrical
+2026-05-08 00:32:10,386 - INFO - services.product - Electrical product initialized | ID: 1, Warranty: 12 months
+2026-05-08 00:32:10,401 - INFO - services.inventory - Updated stock | Product: Laptop | Added Quantity: 10
+2026-05-08 00:32:22,562 - INFO - __main__ - InventoryManager initialized
+2026-05-08 00:33:31,587 - INFO - __main__ - InventoryManager initialized
+2026-05-08 00:38:23,676 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:38:23,796 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:38:27,837 - INFO - services.manager - Inventories fetched successfully
+2026-05-08 00:39:10,224 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 00:39:10,226 - INFO - services.product - Product created | ID: 1, Name: Milk, Qty: 10, Price: 50.0, Category: Grocery
+2026-05-08 00:39:10,226 - INFO - services.product - Grocery product initialized: (ID: 1 | Name: Milk | Qty: 10 | Category: Grocery | Price: 50.0 | Expiry: 2026-05-08)
+2026-05-08 00:39:10,229 - ERROR - services.inventory - Failed to add product | Error: 'GroceryProduct' object has no attribute 'expiry'
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 81, in add_product
+    values3 = (product.name, product.category, product.price, product.expiry)
+                                                              ^^^^^^^^^^^^^^
+AttributeError: 'GroceryProduct' object has no attribute 'expiry'
+2026-05-08 00:41:23,925 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:41:23,932 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:41:53,331 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 00:41:53,333 - INFO - services.product - Product created | ID: 1, Name: Milk, Qty: 10, Price: 50.0, Category: Grocery
+2026-05-08 00:41:53,334 - INFO - services.product - Grocery product initialized: (ID: 1 | Name: Milk | Qty: 10 | Category: Grocery | Price: 50.0 | Expiry: 2026-05-08)
+2026-05-08 00:41:53,375 - INFO - services.inventory - Product added successfully | Product: Milk
+2026-05-08 00:42:09,648 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-08 00:42:09,649 - INFO - services.product - Product created | ID: 2, Name: Milk, Qty: 15, Price: 50.0, Category: Grocery
+2026-05-08 00:42:09,650 - INFO - services.product - Grocery product initialized: (ID: 2 | Name: Milk | Qty: 15 | Category: Grocery | Price: 50.0 | Expiry: 2026-05-08)
+2026-05-08 00:42:09,664 - INFO - services.inventory - Updated stock | Product: Milk | Added Quantity: 15
+2026-05-08 00:42:40,778 - INFO - __main__ - InventoryManager initialized
+2026-05-08 00:48:28,282 - INFO - __main__ - InventoryManager initialized
+2026-05-08 00:48:33,362 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:48:33,409 - INFO - services.manager - InventoryManager initialized
+2026-05-08 00:49:01,247 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 00:49:01,248 - INFO - services.product - Product created | ID: 1, Name: Milk, Qty: 100, Price: 50.0, Category: Grocery
+2026-05-08 00:49:01,248 - INFO - services.product - Grocery product initialized: (ID: 1 | Name: Milk | Qty: 100 | Category: Grocery | Price: 50.0 | Expiry: 2026-05-08)
+2026-05-08 00:49:01,251 - INFO - services.inventory - Updated stock | Product: Milk | Added Quantity: 100
+2026-05-08 10:45:07,553 - INFO - services.manager - InventoryManager initialized
+2026-05-08 10:45:07,682 - INFO - services.manager - InventoryManager initialized
+2026-05-08 10:45:31,610 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 10:45:31,612 - INFO - services.product - Product created | ID: 1, Name: Milk, Qty: 100, Price: 50.0, Category: Grocery
+2026-05-08 10:45:31,613 - INFO - services.product - Grocery product initialized: (ID: 1 | Name: Milk | Qty: 100 | Category: Grocery | Price: 50.0 | Expiry: 2026-05-08)
+2026-05-08 10:45:31,627 - INFO - services.inventory - Updated stock | Product: Milk | Added Quantity: 100
+2026-05-08 10:45:37,944 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 10:47:45,072 - INFO - services.manager - InventoryManager initialized
+2026-05-08 10:47:45,077 - INFO - services.manager - InventoryManager initialized
+2026-05-08 10:47:58,535 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-08 10:48:04,915 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 10:48:39,359 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 10:48:39,371 - ERROR - services.inventory - Failed to update stock | Error: Product not found in inventory
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 211, in update_stock
+    raise ValueError("Product not found in inventory")
+ValueError: Product not found in inventory
+2026-05-08 10:49:05,917 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 10:49:05,920 - ERROR - services.inventory - Failed to update stock | Error: Product not found in inventory
+Traceback (most recent call last):
+  File "D:\Sculptsoft\Pyhton\Inventor_Management_System\services\inventory.py", line 211, in update_stock
+    raise ValueError("Product not found in inventory")
+ValueError: Product not found in inventory
+2026-05-08 10:54:45,199 - INFO - services.manager - InventoryManager initialized
+2026-05-08 10:54:45,204 - INFO - services.manager - InventoryManager initialized
+2026-05-08 10:55:42,884 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 10:55:42,887 - INFO - services.product - Product created | ID: 1, Name: Milk, Qty: 100, Price: 50.0, Category: Grocery
+2026-05-08 10:55:42,887 - INFO - services.product - Grocery product initialized: (ID: 1 | Name: Milk | Qty: 100 | Category: Grocery | Price: 50.0 | Expiry: 2026-05-08)
+2026-05-08 10:55:42,921 - INFO - services.inventory - Product added successfully | Product: Milk
+2026-05-08 10:55:47,571 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:15:50,423 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:15:50,431 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:28:20,251 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:29:29,098 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:29:46,258 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:31:09,138 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:31:25,035 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:31:33,495 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:33:11,355 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:33:29,590 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:34:03,591 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:34:19,852 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:34:27,415 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 11:45:50,959 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:46:48,943 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:47:50,750 - INFO - services.manager - InventoryManager initialized
+2026-05-08 11:49:33,482 - INFO - services.manager - InventoryManager initialized
+2026-05-08 12:28:04,456 - INFO - services.manager - InventoryManager initialized
+2026-05-08 12:28:34,520 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-08 12:28:34,521 - INFO - services.product - Product created | ID: 1, Name: Milk, Qty: 10, Price: 50.0, Category: Grocery
+2026-05-08 12:28:34,521 - INFO - services.product - Grocery product initialized: (ID: 1 | Name: Milk | Qty: 10 | Category: Grocery | Price: 50.0 | Expiry: 2026-05-08)
+2026-05-08 12:28:34,558 - INFO - services.inventory - Product added successfully | Product: Milk
+2026-05-08 12:29:11,461 - ERROR - services.manager - Fetch failed | Inventory not found | Name: , Location: 
+2026-05-08 12:29:22,860 - ERROR - services.manager - Fetch failed | Inventory not found | Name: , Location: 
+2026-05-08 12:29:28,756 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-08 12:29:36,108 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 12:29:36,112 - ERROR - services.manager - Fetch failed | Inventory not found | Name: , Location: 
+2026-05-08 12:30:47,086 - INFO - services.manager - InventoryManager initialized
+2026-05-08 12:30:49,628 - ERROR - services.manager - Fetch failed | Inventory not found | Name: , Location: 
+2026-05-08 12:46:57,580 - INFO - services.manager - InventoryManager initialized
+2026-05-08 12:47:28,913 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 12:47:28,919 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Iscon
+2026-05-08 12:47:28,936 - INFO - services.manager - Stock transferred successfully | Product: Milk | Quantity: 10 | From Inventory: 6 | To Inventory: 5
+2026-05-08 15:31:50,056 - INFO - services.manager - InventoryManager initialized
+2026-05-08 15:31:54,440 - INFO - services.manager - Inventories fetched successfully
+2026-05-08 15:32:17,604 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-08 15:32:23,247 - ERROR - services.manager - Fetch failed | Inventory not found | Name: Zepto, Location: 
+2026-05-08 15:32:27,703 - DEBUG - services.manager - Inventory fetched | Name: Zepto, Location: Gota
+2026-05-08 15:56:19,062 - INFO - services.manager - Inventories fetched successfully
+2026-05-08 15:57:24,668 - INFO - services.manager - Inventory removed | Name: Zepto, Location: Bopal

@@ -1,4 +1,4 @@
-from exception import ProductNotFoundException
+from exception import ProductNotFoundException, InsufficientStockException
 from services.product import Product
 from logs.logger_config import get_logger
 from db.db_connection import get_cursor
@@ -41,66 +41,109 @@ class Inventory:
         try:
             with get_cursor() as cursor:
 
-                # check if product exists
+                # Check if product exists
                 check_query = """
-                SELECT id FROM product WHERE name = %s AND category = %s
+                SELECT id
+                FROM product
+                WHERE name = %s AND category = %s
                 """
+
                 values1 = (product.name, product.category)
-                cursor.execute(check_query,values1)
+
+                cursor.execute(check_query, values1)
 
                 existing_product = cursor.fetchone()
 
-                # product already exists
+                # Product exists
                 if existing_product:
 
                     product_id = existing_product[0]
 
-                    update_stock = """
-                    update inventory_stock 
-                    set quantity = quantity + %s
-                    where inventory_id = %s and product_id = %s
+                # Product does not exist
+                else:
+
+                    if product.category == 'Grocery':
+
+                        insert_product_query = """
+                        INSERT INTO product
+                        (name, category, price, expiry_date)
+                        VALUES (%s, %s, %s, %s)
+                        RETURNING id
+                        """
+
+                        values2 = (
+                            product.name,
+                            product.category,
+                            product.price,
+                            product.expiry_date
+                        )
+
+                    else:
+
+                        insert_product_query = """
+                        INSERT INTO product
+                        (name, category, price, warranty_months)
+                        VALUES (%s, %s, %s, %s)
+                        RETURNING id
+                        """
+
+                        values2 = (
+                            product.name,
+                            product.category,
+                            product.price,
+                            product.warranty_period
+                        )
+
+                    cursor.execute(insert_product_query, values2)
+
+                    product_id = cursor.fetchone()[0]
+
+                # Check stock row exists
+                stock_query = """
+                SELECT quantity
+                FROM inventory_stock
+                WHERE inventory_id = %s AND product_id = %s
+                """
+
+                values3 = (inventory_id, product_id)
+
+                cursor.execute(stock_query, values3)
+
+                existing_stock = cursor.fetchone()
+
+                # Stock exists -> update
+                if existing_stock:
+
+                    update_query = """
+                    UPDATE inventory_stock
+                    SET quantity = quantity + %s
+                    WHERE inventory_id = %s AND product_id = %s
                     """
-                    values2 = (product.quantity, inventory_id, product_id)
 
-                    cursor.execute(update_stock, values2)
-
-                    logger.info(
-                        f"Updated stock | Product: {product.name} | "
-                        f"Added Quantity: {product.quantity}"
+                    values4 = (
+                        product.quantity,
+                        inventory_id,
+                        product_id
                     )
 
-                    return
+                    cursor.execute(update_query, values4)
 
-                # Add new product
-                if product.category == 'Grocery':
-                    insert_product_query = """
-                    insert into product (name, category, price, expiry_date)
-                    values (%s, %s, %s, %s)
-                    returning id
-                    """
-                    values3 = (product.name, product.category, product.price, product.expiry)
-
-                    cursor.execute(insert_product_query, values3)
-
+                # Stock does not exist -> insert
                 else:
-                    insert_product_query = """
-                                        insert into product (name, category, price, warranty_months)
-                                        values (%s, %s, %s, %s)
-                                        returning id
-                                        """
-                    values3 = (product.name, product.category, product.price, product.warranty_period)
 
-                cursor.execute(insert_product_query, values3)
+                    insert_stock_query = """
+                    INSERT INTO inventory_stock
+                    (inventory_id, product_id, quantity)
+                    VALUES (%s, %s, %s)
+                    """
 
-                product_id = cursor.fetchone()[0]
+                    values5 = (
+                        inventory_id,
+                        product_id,
+                        product.quantity
+                    )
 
-                # Insert inventory stock
-                insert_stock_query = """
-                insert into inventory_stock (inventory_id, product_id, quantity)
-                values (%s, %s, %s)
-                """
-                values4 = (inventory_id, product_id, product.quantity)
-                cursor.execute(insert_stock_query, values4)
+                    cursor.execute(insert_stock_query, values5)
 
                 logger.info(
                     f"Product added successfully | "
@@ -164,6 +207,7 @@ class Inventory:
             raise
 
     def get_product(self, product_name: str) -> Product:
+
         """Retrieve a product by name."""
         if product_name not in self.products:
             logger.error(
@@ -176,37 +220,114 @@ class Inventory:
         )
         return self.products[product_name]
 
-    def update_stock(self, product_name: str, quantity: int):
-        """Update stock: positive quantity increases stock, negative decreases."""
-        product = self.get_product(product_name)
-        if quantity > 0:
-            old_qty = product.quantity
-            product.increase_stock(quantity)
+    @staticmethod
+    def update_stock(
+            product_name: str,
+            quantity: int,
+            inventory_id: int
+    ):
+        """Update stock quantity for a product in an inventory."""
 
-            logger.info(
-                f"Stock increased | Inventory: {self._name}, Product: {product_name}, "
-                f"{old_qty} -> {product.quantity} (+{quantity})"
-            )
-        else:
-            old_qty = product.quantity
-            product.decrease_stock(abs(quantity))
-
-            logger.info(
-                f"Stock decreased | Inventory: {self._name}, Product: {product_name}, "
-                f"{old_qty} -> {product.quantity} (-{abs(quantity)})"
-            )
-
-    def check_availability(self, product_name: str, required_quantity: int):
+        get_product_query = """
+        SELECT id
+        FROM product
+        WHERE name = %s
         """
-        Check if a product has enough stock.
-        Returns True if available, otherwise raises InsufficientStockException.
+
+        update_stock_query = """
+        UPDATE inventory_stock
+        SET quantity = quantity + %s
+        WHERE inventory_id = %s
+          AND product_id = %s
         """
-        product = self.get_product(product_name)
-        logger.debug(
-            f"Checking availability | Inventory: {self._name}, Product: {product_name}, "
-            f"Required: {required_quantity}, Available: {product.quantity}"
-        )
-        return product.is_available(required_quantity)
+
+        try:
+
+            if quantity <= 0:
+                raise ValueError(
+                    "Quantity must be greater than 0"
+                )
+
+            with get_cursor() as cursor:
+
+                # Fetch product ID
+                cursor.execute(
+                    get_product_query,
+                    (product_name,)
+                )
+
+                product = cursor.fetchone()
+
+                if product is None:
+                    raise ValueError(
+                        f"Product '{product_name}' not found"
+                    )
+
+                product_id = product[0]
+
+                # Update stock
+                values = (
+                    quantity,
+                    inventory_id,
+                    product_id
+                )
+
+                cursor.execute(
+                    update_stock_query,
+                    values
+                )
+
+                if cursor.rowcount == 0:
+                    raise ValueError(
+                        "Product not found in inventory"
+                    )
+
+                logger.info(
+                    f"Stock updated successfully | "
+                    f"Product: {product_name} | "
+                    f"Added Quantity: {quantity}"
+                )
+
+        except Exception as e:
+
+            logger.exception(
+                f"Failed to update stock | Error: {str(e)}"
+            )
+
+            raise
+
+    @staticmethod
+    def check_availability(product_name: str, required_quantity: int, inventory_id: int):
+
+        query = """
+        SELECT s.quantity
+        FROM inventory_stock s
+        JOIN product p
+            ON p.id = s.product_id
+        WHERE p.name = %s
+        AND s.inventory_id = %s
+        """
+
+        with get_cursor() as cursor:
+
+            values = (product_name, inventory_id)
+
+            cursor.execute(query, values)
+
+            stock = cursor.fetchone()
+
+            if stock is None:
+                raise ProductNotFoundException(
+                    f"{product_name} not found in inventory"
+                )
+
+            available_quantity = stock[0]
+
+            if available_quantity < required_quantity:
+                raise InsufficientStockException(product_name, required_quantity, available_quantity)
+
+            return True
+
 
     @staticmethod
     def list_products(inventory_id):
@@ -256,12 +377,7 @@ class Inventory:
     def __str__(self):
         return f"Inventory: {self.name}, Products: {[str(p) for p in self.products.values()]}"
 
-    # # ---------- Utility ----------
-    #     # def __str__(self) -> str:
-    #     #     product_summary = ", ".join([f"{p.name}({p.quantity})" for p in self._products.values()])
-    #     #     return f"Inventory(ID:{self._inventory_id}, Name:{self._name}, Location:{self._location}, Products:[{product_summary}])"
 
-#
 # p = Product('shoes', 2, 2000, 'footwear')
 #
 # i = Inventory('Zepto', 'Ahemdabad')
@@ -279,5 +395,5 @@ class Inventory:
 # except exception as e:
 #     print("Error : ", e)
 
-l = Inventory.list_products(5)
-print(l)
+# l = Inventory.list_products(5)
+# print(l)

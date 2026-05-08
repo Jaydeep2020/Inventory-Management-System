@@ -96,27 +96,20 @@ class InventoryManager:
             )
             raise
 
-    def get_total_stock(self, product_name: str):
-        #
-        # query = """
-        # select count(*) from inventory_stock is
-        # join product p on p.id = is.product_id
-        # where p.name = %s
-        # """
-        # with get_cursor() as cursor:
-        #
-        total = 0
+    @staticmethod
+    def get_total_stock(product_name: str):
+        query = """
+        SELECT SUM(s.quantity) AS total_stock
+        FROM inventory_stock s
+        JOIN product p ON p.id = s.product_id
+        WHERE p.name = %s
+        """
 
-        logger.debug(f"Calculating total stock | Product: {product_name}")
+        with get_cursor() as cursor:
+            cursor.execute(query, (product_name,))
+            total_stock = cursor.fetchone()[0]
 
-        for inventory in self.inventories.values():
-            try:
-                product = inventory.get_product(product_name)
-                total += product.quantity
-            except ProductNotFoundException:
-                continue
-        logger.info(f"Total stock | Product: {product_name}, Total: {total}")
-        return total
+        return total_stock
 
     def fulfill_order(self, product_name: str, required_quantity: int):
         logger.info(
@@ -148,34 +141,145 @@ class InventoryManager:
         )
         print(f"Order fulfilled for '{product_name}' with quantity {required_quantity}")
 
-    def transfer_stock(self, product_name: str, quantity: int, source_inventory: str, source_location: str, target_inventory: str, target_location: str):
-        logger.info(
-            f"Transfer request | Product: {product_name}, Quantity: {quantity}, "
-            f"From: ({source_inventory}, {source_location}) "
-            f"To: ({target_inventory}, {target_location})"
-        )
+    @staticmethod
+    def transfer_stock(
+            product_name: str,
+            quantity: int,
+            source_inventory_id: int,
+            target_inventory_id: int
+    ):
 
-        source = self.get_inventory(source_inventory, source_location)
-        target = self.get_inventory(target_inventory, target_location)
+        get_product_query = """
+        SELECT id
+        FROM product
+        WHERE name = %s
+        """
 
-        reserved = source.reserve_stock(product_name, quantity)
+        check_source_stock_query = """
+        SELECT quantity
+        FROM inventory_stock
+        WHERE inventory_id = %s
+          AND product_id = %s
+        """
 
-        if reserved == 0:
-            logger.error(
-                f"Transfer failed | No stock available | Product: {product_name}, Requested: {quantity}"
+        reduce_source_stock_query = """
+        UPDATE inventory_stock
+        SET quantity = quantity - %s
+        WHERE inventory_id = %s
+          AND product_id = %s
+        """
+
+        check_target_stock_query = """
+        SELECT quantity
+        FROM inventory_stock
+        WHERE inventory_id = %s
+          AND product_id = %s
+        """
+
+        update_target_stock_query = """
+        UPDATE inventory_stock
+        SET quantity = quantity + %s
+        WHERE inventory_id = %s
+          AND product_id = %s
+        """
+
+        insert_target_stock_query = """
+        INSERT INTO inventory_stock
+        (inventory_id, product_id, quantity)
+        VALUES (%s, %s, %s)
+        """
+
+        try:
+
+            if quantity <= 0:
+                raise ValueError(
+                    "Transfer quantity must be greater than 0"
+                )
+
+            if source_inventory_id == target_inventory_id:
+                raise ValueError(
+                    "Source and target inventory cannot be same"
+                )
+
+            with get_cursor() as cursor:
+
+                # Get product ID
+                cursor.execute(
+                    get_product_query,
+                    (product_name,)
+                )
+
+                product = cursor.fetchone()
+
+                if product is None:
+                    raise ValueError(
+                        f"Product '{product_name}' not found"
+                    )
+
+                product_id = product[0]
+
+                # Check source stock
+                value = (source_inventory_id, product_id)
+                cursor.execute(check_source_stock_query, value)
+
+                source_stock = cursor.fetchone()
+
+                if source_stock is None:
+                    raise ValueError(
+                        "Product not found in source inventory"
+                    )
+
+                available_quantity = source_stock[0]
+
+                if available_quantity < quantity:
+                    raise ValueError(
+                        f"Insufficient stock | "
+                        f"Available: {available_quantity}, "
+                        f"Required: {quantity}"
+                    )
+
+                # Reduce source stock
+                value = (quantity, source_inventory_id, product_id)
+                cursor.execute(reduce_source_stock_query, value)
+
+                # Check target inventory stock
+                value = (target_inventory_id, product_id)
+
+                cursor.execute(check_target_stock_query, value)
+
+                target_stock = cursor.fetchone()
+
+                # If exists -> update
+                if target_stock:
+
+                    value = (quantity, target_inventory_id, product_id)
+
+                    cursor.execute(update_target_stock_query, value)
+
+                # Else -> insert
+                else:
+
+                    value = (target_inventory_id, product_id, quantity)
+                    cursor.execute(insert_target_stock_query, value)
+
+                logger.info(
+                    f"Stock transferred successfully | "
+                    f"Product: {product_name} | "
+                    f"Quantity: {quantity} | "
+                    f"From Inventory: {source_inventory_id} | "
+                    f"To Inventory: {target_inventory_id}"
+                )
+
+        except Exception as e:
+
+            logger.exception(
+                f"Failed to transfer stock | Error: {str(e)}"
             )
-            raise InsufficientStockException(product_name, quantity, 0)
 
-        target.update_stock(product_name, reserved)
-
-        logger.info(
-            f"Stock transferred | Product: {product_name}, Quantity: {reserved}, "
-            f"From: ({source_inventory}, {source_location}) "
-            f"To: ({target_inventory}, {target_location})"
-        )
-
-        print(f"Transferred {reserved} of '{product_name}' from {source_inventory} to {target_inventory}")
+            raise
 
 
 # inventory2 = InventoryManager.get_inventory("Zepto", "Bopal")
 # print(inventory2)
+# im = InventoryManager()
+# print(im.get_total_stock('Milk'))
